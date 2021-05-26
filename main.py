@@ -18,6 +18,9 @@ uploaded_files = st.sidebar.file_uploader('Upload Facade Images', ['png', 'jpg']
 filename_list = []
 wwr_dictionary = {}
 
+def name_without_extension(name):
+    return str(name).split('.')[0]
+
 # Show uploaded_images on the side bar
 for uploaded_file in uploaded_files:
     # png image might have the 4th channel - alpha channel.
@@ -28,8 +31,6 @@ for uploaded_file in uploaded_files:
     st.sidebar.image(img, caption=name)
     filename_list.append(name_without_extension(name))
 
-def name_without_extension(name):
-    return str(name).split('.')[0]
 
 
 
@@ -137,7 +138,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 st.markdown("> Device - " + str(device))
 
 model_path = './models/deeplabv3_facade_2k.pth'
-analysis_flag = st.button('Segmentation!')
+analysis_flag = st.button('Segment!')
 
 deeplabv3_model, device = deeplabv3ModelGenerator(model_path)
 
