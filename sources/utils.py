@@ -34,8 +34,10 @@ def predict(model, image, filename, prediction_path, device):
     annotation = cv2.cvtColor(annotation, cv2.COLOR_RGB2BGR)
     prediction = cv2.cvtColor(prediction_color, cv2.COLOR_RGB2BGR)
 
-    cv2.imwrite(f"./images/prediction/" + filename + "_annotation.jpg", annotation)
-    cv2.imwrite(f"./images/prediction/" + filename + "_prediction.jpg", prediction)
+    path_file_name = prediction_path + '/' + filename
+
+    cv2.imwrite(path_file_name + "_annotation.jpg", annotation)
+    cv2.imwrite(path_file_name + "_prediction.jpg", prediction)
 
     # Also return the original predicted value. 
     return get_wwr_by_pixel(prediction_indexed)

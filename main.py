@@ -15,14 +15,15 @@ uploaded_files = st.sidebar.file_uploader('Upload Facade Images', ['png', 'jpg']
 filename_list = []
 wwr_dictionary = {}
 
+
 # load model
 
 def name_without_extension(name):
     return str(name).split('.')[0]
 
+
 # Show uploaded_images on the side bar
 for uploaded_file in uploaded_files:
-
     # png image might have the 4th channel - alpha channel.
     img = Image.open(uploaded_file)
     name = uploaded_file.name
@@ -31,10 +32,12 @@ for uploaded_file in uploaded_files:
     st.sidebar.image(img, caption=name)
     filename_list.append(name_without_extension(name))
 
+
 def create_folder(folder_path):
     if not os.path.exists(folder_path):
         os.mkdir(folder_path)
     return
+
 
 # def clear_folder(folder_path):
 #     # Check if the image uploading folder exist
@@ -52,14 +55,16 @@ def create_folder(folder_path):
 def save_uploaded_images(input_path):
     for ufile in uploaded_files:
         _img = Image.open(ufile)
-        _img = _img.save(input_path+'/'+ufile.name)
+        _img = _img.save(input_path + '/' + ufile.name)
 
     return
+
 
 def displayAllPredictions(image_folder):
     for i, fn in enumerate(filename_list):
         displayPrediction(fn, image_folder)
     return
+
 
 def displayPrediction(filename, image_folder):
     anno_postfix = '_annotation.jpg'
@@ -98,14 +103,15 @@ def deeplabv3ModelGenerator(model_path):
 def run_prediction():
     # upload_path = './images/upload'
     # image_path = './images'
-    prediction_path = './images/prediction'
+    prediction_path = './prediction'
 
     # Clear both input and output folder. 
-    #clear_folder(upload_path)
-    #clear_folder(prediction_path)
+    # clear_folder(upload_path)
+    # clear_folder(prediction_path)
 
     # Save images to input folder
     # save_uploaded_images(upload_path)
+    # create_folder(image_path)
     create_folder(prediction_path)
 
     # Make prediction
@@ -123,6 +129,7 @@ def run_prediction():
     # Display all prediction and WWR at once
     # displayAllPredictions(prediction_path)
     return
+
 
 # Generate a model with selected weight. Load the model before click analysis.
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
