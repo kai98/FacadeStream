@@ -1,13 +1,12 @@
 import streamlit as st
-import matplotlib.pyplot as plt
+import numpy as np
 import torch
-from PIL import Image
 import cv2 as cv
 import os
+from PIL import Image
+
 from sources.utils import predict
 from sources.utils import init_deeplab
-import torch
-import numpy as np
 
 # st.set_page_config(page_title='Facade Segmentation', page_icon = favicon, layout = 'wide', initial_sidebar_state = 'auto')
 st.set_page_config(page_title='Facade Segmentation', initial_sidebar_state = 'expanded')
@@ -21,24 +20,20 @@ wwr_dictionary = {}
 def name_without_extension(name):
     return str(name).split('.')[0]
 
+
 # Show uploaded_images on the side bar
 for uploaded_file in uploaded_files:
     # png image might have the 4th channel - alpha channel.
     img = Image.open(uploaded_file)
     name = uploaded_file.name
-    plt.imshow(img)
-    plt.show()
     st.sidebar.image(img, caption=name)
     filename_list.append(name_without_extension(name))
-
-
 
 
 def create_folder(folder_path):
     if not os.path.exists(folder_path):
         os.mkdir(folder_path)
     return
-
 
 # def clear_folder(folder_path):
 #     # Check if the image uploading folder exist
@@ -57,7 +52,6 @@ def save_uploaded_images(input_path):
     for ufile in uploaded_files:
         _img = Image.open(ufile)
         _img = _img.save(input_path + '/' + ufile.name)
-
     return
 
 
@@ -135,7 +129,7 @@ def run_prediction():
 # Generate a model with selected weight. Load the model before click analysis.
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-st.markdown("> Device - " + str(device))
+st.markdown("> Device - " + "**" + str(device) + "**")
 
 model_path = './models/deeplabv3_facade_2k.pth'
 analysis_flag = st.button('Segment!')

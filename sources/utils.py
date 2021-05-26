@@ -1,9 +1,8 @@
+from torchvision import transforms
+import torchvision
 import torch
 import numpy as np
-import torchvision
-from torchvision import transforms
 import cv2
-from PIL import Image
 
 transforms_image = transforms.Compose([
         transforms.ToTensor(),
