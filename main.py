@@ -9,18 +9,14 @@ from sources.utils import init_deeplab
 import torch
 import numpy as np
 
+# st.set_page_config(page_title='Facade Segmentation', page_icon = favicon, layout = 'wide', initial_sidebar_state = 'auto')
+st.set_page_config(page_title='Facade Segmentation', initial_sidebar_state = 'expanded')
+
 st.title('DeepLab Facade')
 uploaded_files = st.sidebar.file_uploader('Upload Facade Images', ['png', 'jpg'], accept_multiple_files=True)
 
 filename_list = []
 wwr_dictionary = {}
-
-
-# load model
-
-def name_without_extension(name):
-    return str(name).split('.')[0]
-
 
 # Show uploaded_images on the side bar
 for uploaded_file in uploaded_files:
@@ -31,6 +27,10 @@ for uploaded_file in uploaded_files:
     plt.show()
     st.sidebar.image(img, caption=name)
     filename_list.append(name_without_extension(name))
+
+def name_without_extension(name):
+    return str(name).split('.')[0]
+
 
 
 def create_folder(folder_path):
@@ -137,7 +137,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 st.markdown("> Device - " + str(device))
 
 model_path = './models/deeplabv3_facade_2k.pth'
-analysis_flag = st.button('Analysis')
+analysis_flag = st.button('Segmentation!')
 
 deeplabv3_model, device = deeplabv3ModelGenerator(model_path)
 
