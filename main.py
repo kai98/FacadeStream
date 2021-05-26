@@ -134,7 +134,7 @@ def run_prediction():
 # Generate a model with selected weight. Load the model before click analysis.
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-st.markdown("> Device: " + str(device))
+st.markdown("> Device - " + str(device))
 
 model_path = './models/deeplabv3_facade_2k.pth'
 analysis_flag = st.button('Analysis')
