@@ -40,6 +40,12 @@ def displayAllPredictions(image_folder):
 
 
 def displayPrediction(filename, _img, _pred, _anno, _wwr):
+
+    # Display in 3 columns.
+    # col0: original image,
+    # col1: prediction (colormap),
+    # col0: prediction (annotation),
+
     cols = st.beta_columns(3)
     cols[0].image(_img, use_column_width=True, caption='Image: ' + filename)
     cols[1].image(_pred, use_column_width=True, caption='prediction')
@@ -47,7 +53,7 @@ def displayPrediction(filename, _img, _pred, _anno, _wwr):
 
     wwr_percentage = str(round(_wwr * 100, 2)) + "%"
 
-    # Some markdown
+    # Markdown
     st.markdown("> Window-to-Wall Ratio Estimation:  " + "**" + wwr_percentage + "**")
     st.markdown("------")
     return
@@ -62,20 +68,19 @@ def run_prediction():
         ufile_name = ufile.name
         filename = name_without_extension(ufile_name)
 
-        # prediction, annotated image, and estimated Window-to-Wall Ratio
+        # predict prediction, annotated image, and estimated Window-to-Wall Ratio
         pred_img, anno_image, estimated_wwr = predict(model, img, device)
 
         fn = name_without_extension(ufile.name)
         displayPrediction(fn, img, pred_img, anno_image, estimated_wwr)
 
-        # save result if is_save_result is true
+        # save prediction if is_save_result is true
         if (is_save_result):
             save_result(pred_img, anno_image, estimated_wwr, prediction_path, filename)
 
     return
 
-
-# Generate a model with selected weight. Load the model before click analysis.
+# CPU / GPU
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 st.markdown("> Device - " + "**" + str(device) + "**")

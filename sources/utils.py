@@ -26,7 +26,7 @@ def predict(model, image, device):
     # turn on evaluation 
     model.eval()
 
-    # make sure image is nparray
+    # make sure image is a np-array
     image = np.array(image)
 
     prediction_indexed= label_image(model, image, device)
