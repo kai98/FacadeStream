@@ -6,9 +6,10 @@ import cv2
 import os
 
 transforms_image = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    transforms.ToTensor(),
+    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 ])
+
 
 def deeplabv3ModelGenerator(model_path, device):
     num_classes = 9
@@ -19,17 +20,17 @@ def deeplabv3ModelGenerator(model_path, device):
     model.load_state_dict(state_dict)
     return model
 
-# One image at a time. 
+
+# One image at a time.
 # def predict(model, image, filename, prediction_path, device):
 def predict(model, image, device):
-
-    # turn on evaluation 
+    # turn on evaluation
     model.eval()
 
     # make sure image is a np-array
     image = np.array(image)
 
-    prediction_indexed= label_image(model, image, device)
+    prediction_indexed = label_image(model, image, device)
 
     prediction = decode_segmap(prediction_indexed)
     annotation = annotate_image(image, prediction_indexed)
@@ -38,10 +39,12 @@ def predict(model, image, device):
 
     return prediction, annotation, estimated_wwr
 
+
 def save_result(pred, anno, wwr, path, filename):
     save_image(pred, path, filename, 'prediction')
     save_image(anno, path, filename, 'annotation')
     return
+
 
 def save_image(_img, path, filename, postfix):
     full_path = path + "/" + filename + "-" + postfix + ".jpg"
@@ -51,8 +54,8 @@ def save_image(_img, path, filename, postfix):
     cv2.imwrite(full_path, bgr_img)
     return
 
-def get_wwr_by_pixel(prediction_indexed):
 
+def get_wwr_by_pixel(prediction_indexed):
     # 0 Void, or various
     # 1 Wall
     # 2 Car
@@ -70,20 +73,19 @@ def get_wwr_by_pixel(prediction_indexed):
 
 
 def annotate_image(image, pred_indexed):
-
     annotate_colors = {
-        0 : (0, 0, 0),              # Various
-        1 : (128, 0, 0),            # Wall
-        2 : (128, 0, 128),          # Car
-        3 : (128, 128, 0),          # Door
-        4 : (128, 128, 128),        # Pavement
-        5 : (128, 64, 0),           # Road
-        6 : (0, 128, 128),          # Sky
-        7 : (0, 128, 0),            # Vegetation
-        8 : (0, 0, 128)             # Windows
+        0: (0, 0, 0),  # Various
+        1: (128, 0, 0),  # Wall
+        2: (128, 0, 128),  # Car
+        3: (128, 128, 0),  # Door
+        4: (128, 128, 128),  # Pavement
+        5: (128, 64, 0),  # Road
+        6: (0, 128, 128),  # Sky
+        7: (0, 128, 0),  # Vegetation
+        8: (0, 0, 128)  # Windows
     }
     image = np.array(image)
-    
+
     dim_factor = 0.5
     image = image * dim_factor
 
@@ -108,27 +110,16 @@ def annotate_image(image, pred_indexed):
 # Define the helper function
 def decode_segmap(pred_indexed, nc=9):
 
-
-    # 0 Void, or various
-    # 1 Wall
-    # 2 Car
-    # 3 Door
-    # 4 Pavement
-    # 5 Road
-    # 6 Sky
-    # 7 Vegetation
-    # 8 Windows
-
     label_colors = {
-        0 : (0, 0, 0),              # Various
-        1 : (128, 0, 0),            # Wall
-        2 : (128, 0, 128),          # Car
-        3 : (128, 128, 0),          # Door
-        4 : (128, 128, 128),        # Pavement
-        5 : (128, 64, 0),           # Road
-        6 : (0, 128, 128),          # Sky
-        7 : (0, 128, 0),            # Vegetation
-        8 : (0, 0, 128)             # Windows
+        0: (0, 0, 0),  # Various
+        1: (128, 0, 0),  # Wall
+        2: (128, 0, 128),  # Car
+        3: (128, 128, 0),  # Door
+        4: (128, 128, 128),  # Pavement
+        5: (128, 64, 0),  # Road
+        6: (0, 128, 128),  # Sky
+        7: (0, 128, 0),  # Vegetation
+        8: (0, 0, 128)  # Windows
     }
 
     r = np.zeros_like(pred_indexed).astype(np.uint8)
@@ -140,9 +131,9 @@ def decode_segmap(pred_indexed, nc=9):
         r[idx] = label_colors[label][0]
         g[idx] = label_colors[label][1]
         b[idx] = label_colors[label][2]
-    
+
     rgb = np.stack([r, g, b], axis=2)
-    
+
     return rgb
 
 
@@ -162,13 +153,14 @@ def label_image(model, image, device):
 
     return preds_np
 
-def init_deeplab(num_classes):
 
+def init_deeplab(num_classes):
     model_deeplabv3 = torchvision.models.segmentation.deeplabv3_resnet101()
     model_deeplabv3.aux_classifier = None
     model_deeplabv3.classifier = torchvision.models.segmentation.deeplabv3.DeepLabHead(2048, num_classes)
 
     return model_deeplabv3
+
 
 def create_folder(folder_path):
     if not os.path.exists(folder_path):
