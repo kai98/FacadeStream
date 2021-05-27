@@ -1,8 +1,8 @@
 import streamlit as st
-import numpy as np
-import torch
 from PIL import Image
 from sources.utils import *
+# import numpy as np
+# import torch
 
 st.set_page_config(page_title='Facade Segmentation', page_icon='🏠', initial_sidebar_state='expanded')
 
