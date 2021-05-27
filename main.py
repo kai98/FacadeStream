@@ -79,7 +79,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 st.markdown("> Device - " + "**" + str(device) + "**")
 
 model_path = './models/deeplabv3_facade_2k.pth'
-analysis_flag = st.button('Segment!')
+analysis_flag = st.button('Run it!')
 
 model = deeplabv3ModelGenerator(model_path, device)
 
