@@ -3,16 +3,25 @@ import torchvision
 import torch
 import numpy as np
 import cv2
+import os
 
 transforms_image = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 ])
 
+def deeplabv3ModelGenerator(model_path, device):
+    num_classes = 9
+
+    model = init_deeplab(num_classes)
+    state_dict = torch.load(model_path, map_location=device)
+    model = model.to(device)
+    model.load_state_dict(state_dict)
+    return model
+
 # One image at a time. 
-def predict(model, image, filename, prediction_path, device):
-    # TODO: Multiple image support.
-    # Number of classes in the dataset
+# def predict(model, image, filename, prediction_path, device):
+def predict(model, image, device):
 
     # turn on evaluation 
     model.eval()
@@ -22,25 +31,25 @@ def predict(model, image, filename, prediction_path, device):
 
     prediction_indexed= label_image(model, image, device)
 
-    prediction_color = decode_segmap(prediction_indexed)
-
+    prediction = decode_segmap(prediction_indexed)
     annotation = annotate_image(image, prediction_indexed)
 
-    # make sure in the right format
-    # image = image.astype('uint8')
+    estimated_wwr = get_wwr_by_pixel(prediction_indexed)
 
-    # Image channel.. 
-    annotation = cv2.cvtColor(annotation, cv2.COLOR_RGB2BGR)
-    prediction = cv2.cvtColor(prediction_color, cv2.COLOR_RGB2BGR)
+    return prediction, annotation, estimated_wwr
 
-    path_file_name = prediction_path + '/' + filename
+def save_result(pred, anno, wwr, path, filename):
+    save_image(pred, path, filename, 'prediction')
+    save_image(anno, path, filename, 'annotation')
+    return
 
-    cv2.imwrite(path_file_name + "_annotation.jpg", annotation)
-    cv2.imwrite(path_file_name + "_prediction.jpg", prediction)
+def save_image(_img, path, filename, postfix):
+    full_path = path + "/" + filename + "-" + postfix + ".jpg"
 
-    # Also return the original predicted value. 
-    return get_wwr_by_pixel(prediction_indexed)
-
+    # CV2 write
+    bgr_img = cv2.cvtColor(_img, cv2.COLOR_RGB2BGR)
+    cv2.imwrite(full_path, bgr_img)
+    return
 
 def get_wwr_by_pixel(prediction_indexed):
 
@@ -75,7 +84,6 @@ def annotate_image(image, pred_indexed):
     }
     image = np.array(image)
     
-    # 
     dim_factor = 0.5
     image = image * dim_factor
 
@@ -85,11 +93,11 @@ def annotate_image(image, pred_indexed):
 
     anno_factor = 0.5
 
-    for l in annotate_colors:
-        idx = pred_indexed == l
-        r[idx] += annotate_colors[l][0] * anno_factor
-        g[idx] += annotate_colors[l][1] * anno_factor
-        b[idx] += annotate_colors[l][2] * anno_factor
+    for label in annotate_colors:
+        idx = pred_indexed == label
+        r[idx] += annotate_colors[label][0] * anno_factor
+        g[idx] += annotate_colors[label][1] * anno_factor
+        b[idx] += annotate_colors[label][2] * anno_factor
 
     rgb = np.stack([r, g, b], axis=2)
     rgb = rgb.clip(0, 255)
@@ -123,17 +131,15 @@ def decode_segmap(pred_indexed, nc=9):
         8 : (0, 0, 128)             # Windows
     }
 
-
     r = np.zeros_like(pred_indexed).astype(np.uint8)
     g = np.zeros_like(pred_indexed).astype(np.uint8)
     b = np.zeros_like(pred_indexed).astype(np.uint8)
-    
 
-    for l in range(0, nc):
-        idx = pred_indexed == l
-        r[idx] = label_colors[l][0]
-        g[idx] = label_colors[l][1]
-        b[idx] = label_colors[l][2]
+    for label in range(0, nc):
+        idx = pred_indexed == label
+        r[idx] = label_colors[label][0]
+        g[idx] = label_colors[label][1]
+        b[idx] = label_colors[label][2]
     
     rgb = np.stack([r, g, b], axis=2)
     
@@ -163,3 +169,21 @@ def init_deeplab(num_classes):
     model_deeplabv3.classifier = torchvision.models.segmentation.deeplabv3.DeepLabHead(2048, num_classes)
 
     return model_deeplabv3
+
+def create_folder(folder_path):
+    if not os.path.exists(folder_path):
+        os.mkdir(folder_path)
+    return
+
+# def clear_folder(folder_path):
+#     # Check if the image uploading folder exist
+#     # If yes, delete all file under this path
+#     if os.path.exists(folder_path):
+#         for img_name in os.listdir(folder_path):
+#             filepath = os.path.join(folder_path, img_name)
+#             print(filepath)
+#             os.remove(filepath)
+#     # if the folder doesn't exist, create an empty folder.
+#     else:
+#         os.mkdir(folder_path)
+#     return
