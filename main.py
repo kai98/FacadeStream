@@ -4,7 +4,7 @@ import torch
 from PIL import Image
 from sources.utils import *
 
-st.set_page_config(page_title='Facade Segmentation', page_icon = '🏠', initial_sidebar_state = 'expanded')
+st.set_page_config(page_title='Facade Segmentation', page_icon='🏠', initial_sidebar_state='expanded')
 
 st.title('DeepLab Facade')
 uploaded_files = st.sidebar.file_uploader('Upload Facade Images', ['png', 'jpg'], accept_multiple_files=True)
@@ -12,6 +12,7 @@ uploaded_files = st.sidebar.file_uploader('Upload Facade Images', ['png', 'jpg']
 is_save_result = True
 
 filename_list = []
+
 
 def name_without_extension(name):
     return str(name).split('.')[0]
@@ -36,6 +37,7 @@ def displayAllPredictions(image_folder):
     for i, fn in enumerate(filename_list):
         displayPrediction(fn, image_folder)
     return
+
 
 def displayPrediction(filename, _img, _pred, _anno, _wwr):
     cols = st.beta_columns(3)
