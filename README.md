@@ -12,7 +12,7 @@ Using eTRIMES's color code
 More about **eTRIMS dataset**: http://www.ipb.uni-bonn.de/projects/etrims_db/
 
 | Index | Label      | RGB             |
-| :---: | :--------- | --------------- |
+| --- | --------- | --------------- |
 |   0   | Various    | (0, 0, 0)       |
 |   1   | Wall       | (128, 0, 0)     |
 |   2   | Car        | (128, 0, 128)   |
