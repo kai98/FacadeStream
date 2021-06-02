@@ -7,9 +7,9 @@ Visualization tool for Facade Segmentation
 
 ### Color Map
 
-Using the same color code for labels as eTRIMES dataset
+Using eTRIMES's color code
 
-More about **eTRIMS**: http://www.ipb.uni-bonn.de/projects/etrims_db/
+More about **eTRIMS dataset**: http://www.ipb.uni-bonn.de/projects/etrims_db/
 
 | Index | Label      | RGB             |
 | :---: | :--------- | --------------- |
