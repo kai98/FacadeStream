@@ -116,7 +116,6 @@ def get_devices():
     return devices_map
 
 devices_map = get_devices()
-print(devices_map.keys())
 model_list = []
 
 # Scan model_path
@@ -139,6 +138,8 @@ device = torch.device(device_value)
 analysis_flag = st.button('Run it!')
 
 model = deeplabv3ModelGenerator(model_path + "/" + selected_model, device)
+# print('Model name: %s'% selected_model)
+# print('Device: %s'%device_value)
 
 if analysis_flag:
     run_prediction()
