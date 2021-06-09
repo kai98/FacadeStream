@@ -7,7 +7,7 @@ from sources.utils import *
 st.set_page_config(page_title='Facade Segmentation', page_icon='🏠', initial_sidebar_state='expanded')
 
 st.title('DeepLab Facade')
-uploaded_files = st.sidebar.file_uploader('Upload Facade Images', ['png', 'jpg'], accept_multiple_files=True)
+uploaded_files = st.sidebar.file_uploader('Upload Facade Images', ['png', 'jpg', 'jepg'], accept_multiple_files=True)
 
 # Hide setting bar and footer
 hide_streamlit_style = """
@@ -56,7 +56,7 @@ def displayPrediction(filename, _img, _pred, _anno, _wwr):
 
     cols = st.beta_columns(3)
     cols[0].image(_img, use_column_width=True, caption='Image: ' + filename)
-    cols[1].image(_pred, use_column_width=True, caption='prediction')
+    cols[1].image(_pred, use_column_width=True, caption='Prediction')
     cols[2].image(_anno, use_column_width=True, caption='Annotation')
 
     wwr_percentage = str(round(_wwr * 100, 2)) + "%"
