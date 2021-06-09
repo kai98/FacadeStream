@@ -80,7 +80,7 @@ pip3 install -r requirements.txt
 Download the trained model: 
 https://drive.google.com/file/d/1gErS3tKZbpyAowmEnytK2JC65CMFrTcY/view?usp=sharing
 
-put it under **/models** folder. Make sure the filename is **facade_segmentation.pth**
+put it under **/models** folder.
 
 
 
