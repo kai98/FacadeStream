@@ -5,6 +5,9 @@ sources/.ipynb_checkpoints/*
 sources/__pycache__/*
 .DS_Store
 
+*.pth
+*.ph
+
 *.jpg
 *.jpeg
 *.png
