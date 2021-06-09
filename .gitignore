@@ -4,3 +4,8 @@ models/*
 sources/.ipynb_checkpoints/*
 sources/__pycache__/*
 .DS_Store
+
+*.jpg
+*.jpeg
+*.png
+.env
