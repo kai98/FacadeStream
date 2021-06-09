@@ -31,6 +31,14 @@ pip3 install virtualenv
 
 
 
+### Creating a virtual environment,  'facade-env' (or any other names)
+
+``` 
+virtualenv facade-env
+```
+
+
+
 ### Activating the virtual environment
 
 **Windows **
