@@ -41,7 +41,7 @@ virtualenv facade-env
 
 ### Activating the virtual environment
 
-**Windows **
+**Windows**
 
 ```
 $ facade-env\scripts\activate
