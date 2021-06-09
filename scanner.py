@@ -83,12 +83,17 @@ def run_prediction():
 # CPU / GPU
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-st.markdown("> Device - " + "**" + str(device) + "**")
+cols = st.beta_columns(2)
 
-model_path = './models/deeplabv3_facade_2k.pth'
+model_path = './models/'
+model_file = 'facade_segmentation.pth'
+
+cols[0].markdown("> Device - **%s**" % str(device))
+cols[1].markdown("> Model - **%s**" % model_file)
+
 analysis_flag = st.button('Run it!')
 
-model = deeplabv3ModelGenerator(model_path, device)
+model = deeplabv3ModelGenerator(model_path + model_file, device)
 
 if analysis_flag:
     run_prediction()
