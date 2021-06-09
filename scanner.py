@@ -116,6 +116,7 @@ def get_devices():
     return devices_map
 
 devices_map = get_devices()
+print(devices_map.keys())
 model_list = []
 
 # Scan model_path
@@ -127,10 +128,11 @@ for model_name in os.listdir(model_path):
 cols = st.beta_columns(2)
 
 selected_model = cols[0].selectbox('Model', model_list)
-selected_device = cols[1].selectbox('Device', devices_map.keys())
-selected_device = devices_map[selected_device]
+# [*devices_map] will return a list of dictionary key, a list of devices' name.
+device_key = cols[1].selectbox('Device', [*devices_map])
+device_value = devices_map[device_key]
 
-device = torch.device(selected_device)
+device = torch.device(device_value)
 analysis_flag = st.button('Run it!')
 
 model = deeplabv3ModelGenerator(model_path + "/" + selected_model, device)
