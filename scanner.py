@@ -107,7 +107,7 @@ def get_devices():
     for i in range(device_count):
         device_name = torch.cuda.get_device_name(i) + '_' + str(i)
         devices.append(device_name)
-        devices_map[device_name] = 'cuda:' + 'i'
+        devices_map[device_name] = 'cuda:' + str(i)
 
     # CPU option
     cpu_name = 'CPU'
