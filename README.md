@@ -41,7 +41,7 @@ virtualenv facade-env
 
 ### Activating the virtual environment
 
-**Windows **
+**Windows**
 
 ```
 $ facade-env\scripts\activate
@@ -77,9 +77,10 @@ pip3 install -r requirements.txt
 
 ## Step 2: Download the Trained Model
 
-Download the trained model: https://drive.google.com/file/d/1gErS3tKZbpyAowmEnytK2JC65CMFrTcY/view?usp=sharing
+Download the trained model: 
+https://drive.google.com/file/d/1gErS3tKZbpyAowmEnytK2JC65CMFrTcY/view?usp=sharing
 
-and put in under **/models** folder. Make sure the filename is **facade_segmentation.pth**
+put it under **/models** folder. Make sure the filename is **facade_segmentation.pth**
 
 
 
