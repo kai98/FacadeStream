@@ -129,7 +129,7 @@ cols = st.beta_columns(2)
 
 selected_model = cols[0].selectbox('Model', model_list)
 
-cuda_message = '-CUDA is available' if torch.cuda.is_available() else ''
+cuda_message = ' - CUDA is available' if torch.cuda.is_available() else ''
 
 # [*devices_map] will return a list of dictionary key, a list of devices' name.
 device_key = cols[1].selectbox('Device' + cuda_message, [*devices_map])
