@@ -16,6 +16,7 @@ hide_streamlit_style = """
             footer {visibility: hidden;}
             </style>
             """
+
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 
@@ -100,17 +101,21 @@ model_path = './models'
 # Get all cuda devices...Usually just one CPU or one GPU.
 def get_devices():
     devices = []
+    devices_map = {}
     # Cuda devices
     device_count = torch.cuda.device_count()
     for i in range(device_count):
-        device_name = torch.cuda.get_device_name(i)
+        device_name = torch.cuda.get_device_name(i) + '_' + i
         devices.append(device_name)
+        devices_map[device_name] = 'cuda:' + 'i'
 
     # CPU option
-    devices.append('cpu')
-    return devices
+    cpu_name = 'CPU'
+    devices.append(cpu_name)
+    devices_map[cpu_name] = 'cpu'
+    return devices_map
 
-device_list = get_devices()
+devices_map = get_devices()
 model_list = []
 
 # Scan model_path
@@ -122,7 +127,8 @@ for model_name in os.listdir(model_path):
 cols = st.beta_columns(2)
 
 selected_model = cols[0].selectbox('Model', model_list)
-selected_device = cols[1].selectbox('Device', device_list)
+selected_device = cols[1].selectbox('Device', devices_map.keys())
+selected_device = devices_map[selected_device]
 
 device = torch.device(selected_device)
 analysis_flag = st.button('Run it!')

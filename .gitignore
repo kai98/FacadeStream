@@ -1,4 +1,3 @@
-
 *.pyc
 sources/.ipynb_checkpoints/*
 sources/__pycache__/*
