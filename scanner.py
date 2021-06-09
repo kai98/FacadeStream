@@ -9,13 +9,21 @@ st.set_page_config(page_title='Facade Segmentation', page_icon='🏠', initial_s
 st.title('DeepLab Facade')
 uploaded_files = st.sidebar.file_uploader('Upload Facade Images', ['png', 'jpg'], accept_multiple_files=True)
 
-is_save_result = True
+# Hide setting bar and footer
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
+
+is_save_result = True
 filename_list = []
 
-
-def name_without_extension(name):
-    return str(name).split('.')[0]
+def name_without_extension(filename):
+    return ".".join(str(filename).split('.')[:-1])
 
 # Show uploaded_images on the side bar
 for uploaded_file in uploaded_files:
@@ -54,7 +62,7 @@ def displayPrediction(filename, _img, _pred, _anno, _wwr):
     wwr_percentage = str(round(_wwr * 100, 2)) + "%"
 
     # Markdown
-    st.markdown("> Window-to-Wall Ratio Estimation:  " + "**" + wwr_percentage + "**")
+    st.markdown("> Estimated Window-to-Wall Ratio:  " + "**" + wwr_percentage + "**")
     st.markdown("------")
     return
 
@@ -80,20 +88,46 @@ def run_prediction():
 
     return
 
+
+# The following code: set up device (cuda or not) and select the model.
+
 # CPU / GPU
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+model_path = './models'
+
+# -----
+
+# Get all cuda devices...Usually just one CPU or one GPU.
+def get_devices():
+    devices = []
+    # Cuda devices
+    device_count = torch.cuda.device_count()
+    for i in range(device_count):
+        device_name = torch.cuda.get_device_name(i)
+        devices.append(device_name)
+
+    # CPU option
+    devices.append('cpu')
+    return devices
+
+device_list = get_devices()
+model_list = []
+
+# Scan model_path
+for model_name in os.listdir(model_path):
+    extension = model_name.split('.')[-1]
+    if extension == 'pt' or extension == 'pth':
+        model_list.append(model_name)
 
 cols = st.beta_columns(2)
 
-model_path = './models/'
-model_file = 'facade_segmentation.pth'
+selected_model = cols[0].selectbox('Model', model_list)
+selected_device = cols[1].selectbox('Device', device_list)
 
-cols[0].markdown("> Device - **%s**" % str(device))
-cols[1].markdown("> Model - **%s**" % model_file)
-
+device = torch.device(selected_device)
 analysis_flag = st.button('Run it!')
 
-model = deeplabv3ModelGenerator(model_path + model_file, device)
+model = deeplabv3ModelGenerator(model_path + "/" + selected_model, device)
 
 if analysis_flag:
     run_prediction()
