@@ -3,7 +3,91 @@ Visualization tool for Facade Segmentation
 
 
 
+## Step 0: Virutal Environment [Optional]
 
+It is convenient to use pip to manage python environment. 
+
+To check the current pip version: 
+
+```shell
+pip3 --version
+```
+
+Installing the latest pip:
+
+```
+pip3 install --upgrade pip
+```
+
+
+
+### Installing virtualenv
+
+**virtualenv:** https://pypi.org/project/virtualenv/
+
+```
+pip3 install virtualenv
+```
+
+
+
+### Activating the virtual environment
+
+**Windows **
+
+```
+$ facade-env\scripts\activate
+```
+
+**Mac & Linux**
+
+```
+$ source facade-env/bin/activate
+```
+
+
+
+### Deactivating the virtual environment
+
+To leave the virtual environment when everything is done (the localhost is running, in our case). 
+
+```
+deactivate
+```
+
+
+
+## Step 1: 'Pip Installs Packages'
+
+Change directory to the folder. In your pip environment, install the dependencies using:
+
+```
+pip3 install -r requirements.txt
+```
+
+
+
+## Step 2: Download the Trained Model
+
+Download the trained model: https://drive.google.com/file/d/1gErS3tKZbpyAowmEnytK2JC65CMFrTcY/view?usp=sharing
+
+and put in under **/models** folder. Make sure the filename is **facade_segmentation.pth**
+
+
+
+## Step 3: Run the scanner app
+
+**Streamlit:** https://streamlit.io
+
+Start the facade segmentation tool by running:
+
+```
+streamlit run scanner.py
+```
+
+
+
+## Others
 
 ### Color Map
 
