@@ -25,7 +25,7 @@ streamlit run scanner.py
 
 
 
-------
+---
 
 
 
@@ -107,15 +107,15 @@ pip3 install -r requirements.txt
 
 ## Step 2: Import Trained Model
 
-Download the pretrained model by clicking the button.
+**Download the pretrained model by clicking the button.**
 
 or 
 
-Download the trained model: 
+Download the trained model using following link: 
 
 https://drive.google.com/file/d/1gErS3tKZbpyAowmEnytK2JC65CMFrTcY/view?usp=sharing
 
-put it under **/models** folder.
+, and put it under **/models** folder.
 
 
 
