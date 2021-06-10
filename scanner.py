@@ -95,11 +95,11 @@ def run_prediction():
 model_path = './models'
 
 def download_default_model(dir):
-    google_drive_url = 'https://drive.google.com/uc?export=download&id=1gErS3tKZbpyAowmEnytK2JC65CMFrTcY'
-    output = dir + '/trained_model.pth'
-    md5 = '31aa0b0a3607b091975b5e05df590280'
-    # gdown.download(google_drive_url, output,  quiet=False)
-    gdown.cached_download(google_drive_url, output, md5=md5)
+    google_drive_url = 'https://drive.google.com/uc?export=download&id=1rJ3edeARtcprrgs14lj5iZLTLkn9kufw'
+    output = dir + '/deeplabv3_resnet101.pth'
+    # md5 = '31aa0b0a3607b091975b5e05df590280'
+    gdown.download(google_drive_url, output,  quiet=False)
+    # gdown.cached_download(google_drive_url, output, md5=md5)
 # -----
 
 # Download model
@@ -144,7 +144,7 @@ if (model_list == []):
     cols = st.beta_columns(2)
     download_stage = cols[1].markdown('Model not found 😧')
     if (cols[0].button('Download Model')):
-        download_stage.markdown('Downloading... 👾')
+        download_stage.markdown('Downloading... ⏳')
         download_default_model(model_path)
         download_stage.markdown('Downloaded 🎉')
         model_list = get_model_list(model_path)

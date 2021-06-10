@@ -113,7 +113,7 @@ or
 
 Download the trained model using following link: 
 
-https://drive.google.com/file/d/1gErS3tKZbpyAowmEnytK2JC65CMFrTcY/view?usp=sharing
+https://drive.google.com/uc?export=download&id=1rJ3edeARtcprrgs14lj5iZLTLkn9kufw
 
 , and put it under **/models** folder.
 
