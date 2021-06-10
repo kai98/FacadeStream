@@ -1,13 +1,12 @@
 import streamlit as st
 from PIL import Image
 from sources.utils import *
-# import numpy as np
-# import torch
+import gdown
 
 st.set_page_config(page_title='Facade Segmentation', page_icon='🏠', initial_sidebar_state='expanded')
-
 st.title('DeepLab Facade')
-uploaded_files = st.sidebar.file_uploader('Upload Facade Images', ['png', 'jpg', 'jepg'], accept_multiple_files=True)
+
+uploaded_files = st.sidebar.file_uploader('Upload Facade Images', ['png', 'jpg', 'jpeg'], accept_multiple_files=True)
 
 # Hide setting bar and footer
 hide_streamlit_style = """
@@ -18,7 +17,6 @@ hide_streamlit_style = """
             """
 
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
 
 is_save_result = True
 filename_list = []
@@ -96,7 +94,16 @@ def run_prediction():
 
 model_path = './models'
 
+def download_default_model(dir):
+    google_drive_url = 'https://drive.google.com/uc?export=download&id=1gErS3tKZbpyAowmEnytK2JC65CMFrTcY'
+    output = dir + '/trained_model.pth'
+    md5 = '31aa0b0a3607b091975b5e05df590280'
+    # gdown.download(google_drive_url, output,  quiet=False)
+    gdown.cached_download(google_drive_url, output, md5=md5)
 # -----
+
+# Download model
+
 
 # Get all cuda devices...Usually just one CPU or one GPU.
 def get_devices():
@@ -116,16 +123,33 @@ def get_devices():
     return devices_map
 
 devices_map = get_devices()
-model_list = []
+
 
 # Scan model_path
-for model_name in os.listdir(model_path):
-    extension = model_name.split('.')[-1]
-    if extension == 'pt' or extension == 'pth':
-        model_list.append(model_name)
+def get_model_list (dir):
+    models = []
+    if not os.path.exists(dir):
+        os.mkdir(dir)
+
+    for model_name in os.listdir(dir):
+        extension = model_name.split('.')[-1]
+        if extension == 'pt' or extension == 'pth':
+            models.append(model_name)
+    return models
+
+model_list = get_model_list(model_path)
+
+if (model_list == []):
+    # download_flag = st.button('Download the model')
+    cols = st.beta_columns(2)
+    download_stage = cols[1].empty()
+    if (cols[0].button('Download Model')):
+        download_stage.text('Downloading...')
+        download_default_model(model_path)
+        download_stage.text('Downloaded :D')
+        model_list = get_model_list(model_path)
 
 cols = st.beta_columns(2)
-
 selected_model = cols[0].selectbox('Model', model_list)
 
 cuda_message = ' - CUDA is available' if torch.cuda.is_available() else ''
@@ -134,12 +158,11 @@ cuda_message = ' - CUDA is available' if torch.cuda.is_available() else ''
 device_key = cols[1].selectbox('Device' + cuda_message, [*devices_map])
 device_value = devices_map[device_key]
 
-device = torch.device(device_value)
-analysis_flag = st.button('Run it!')
-
-model = deeplabv3ModelGenerator(model_path + "/" + selected_model, device)
-# print('Model name: %s'% selected_model)
-# print('Device: %s'%device_value)
-
-if analysis_flag:
-    run_prediction()
+if (model_list != []):
+    device = torch.device(device_value)
+    analysis_flag = st.button('Run it!')
+    model = deeplabv3ModelGenerator(model_path + "/" + selected_model, device)
+    # print('Model name: %s'% selected_model)
+    # print('Device: %s'%device_value)
+    if analysis_flag:
+        run_prediction()

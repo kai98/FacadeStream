@@ -3,6 +3,36 @@ Visualization tool for Facade Segmentation
 
 
 
+# TL;DR
+
+**Installing Dependencies**
+
+```
+pip3 install -r requirements.txt
+```
+
+
+
+**Running the Streamlit App**
+
+```
+streamlit run scanner.py
+```
+
+
+
+**Then download the pretrained model by clicking the button**. 
+
+
+
+------
+
+
+
+# How to Run the App
+
+
+
 ## Step 0: Virutal Environment [Optional]
 
 It is convenient to use pip to manage python environment. 
@@ -75,7 +105,7 @@ pip3 install -r requirements.txt
 
 
 
-## Step 2: Download the Trained Model
+## Step 2: Import Trained Model
 
 Download the trained model: 
 https://drive.google.com/file/d/1gErS3tKZbpyAowmEnytK2JC65CMFrTcY/view?usp=sharing
