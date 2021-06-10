@@ -142,11 +142,11 @@ model_list = get_model_list(model_path)
 if (model_list == []):
     # download_flag = st.button('Download the model')
     cols = st.beta_columns(2)
-    download_stage = cols[1].empty()
+    download_stage = cols[1].markdown('Model not found 😧')
     if (cols[0].button('Download Model')):
-        download_stage.text('Downloading...')
+        download_stage.markdown('Downloading... 👾')
         download_default_model(model_path)
-        download_stage.text('Downloaded :D')
+        download_stage.markdown('Downloaded 🎉')
         model_list = get_model_list(model_path)
 
 cols = st.beta_columns(2)
@@ -160,7 +160,7 @@ device_value = devices_map[device_key]
 
 if (model_list != []):
     device = torch.device(device_value)
-    analysis_flag = st.button('Run it!')
+    analysis_flag = st.button('Run it! ')
     model = deeplabv3ModelGenerator(model_path + "/" + selected_model, device)
     # print('Model name: %s'% selected_model)
     # print('Device: %s'%device_value)
