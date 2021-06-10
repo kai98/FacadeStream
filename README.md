@@ -74,13 +74,13 @@ virtualenv facade-env
 **Windows**
 
 ```
-$ facade-env\scripts\activate
+facade-env\scripts\activate
 ```
 
 **Mac & Linux**
 
 ```
-$ source facade-env/bin/activate
+source facade-env/bin/activate
 ```
 
 
@@ -106,6 +106,10 @@ pip3 install -r requirements.txt
 
 
 ## Step 2: Import Trained Model
+
+Download the pretrained model by clicking the button.
+
+or 
 
 Download the trained model: 
 https://drive.google.com/file/d/1gErS3tKZbpyAowmEnytK2JC65CMFrTcY/view?usp=sharing
