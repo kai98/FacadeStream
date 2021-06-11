@@ -18,7 +18,7 @@ hide_streamlit_style = """
 
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-is_save_result = True
+is_save_result = False
 filename_list = []
 
 def name_without_extension(filename):
