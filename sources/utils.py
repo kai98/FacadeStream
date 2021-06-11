@@ -24,8 +24,12 @@ def deeplabv3ModelGenerator(model_path, device):
 # One image at a time.
 # def predict(model, image, filename, prediction_path, device):
 def predict(model, image, device):
-    # turn on evaluation
+    # turn on eval mode
     model.eval()
+    
+    # turn off autograd engine. Make it faster.
+    model.no_grad()
+
 
     # make sure image is a np-array
     image = np.array(image)
@@ -47,6 +51,7 @@ def save_result(pred, anno, wwr, path, filename):
 
 
 def save_image(_img, path, filename, postfix):
+    create_folder(path)
     full_path = path + "/" + filename + "-" + postfix + ".jpg"
 
     # CV2 write

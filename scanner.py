@@ -68,9 +68,6 @@ def displayPrediction(filename, _img, _pred, _anno, _wwr):
     return
 
 def run_prediction():
-    prediction_path = './prediction'
-    create_folder(prediction_path)
-
     # Predict each image in uploaded_files
     for ufile in uploaded_files:
         img = np.array(Image.open(ufile).convert('RGB'))
