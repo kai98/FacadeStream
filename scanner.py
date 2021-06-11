@@ -164,4 +164,7 @@ if (model_list != []):
     # print('Model name: %s'% selected_model)
     # print('Device: %s'%device_value)
     if analysis_flag:
+        # turn off autograd engine. Make it faster.
+        torch.no_grad()
+
         run_prediction()

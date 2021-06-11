@@ -26,9 +26,9 @@ def deeplabv3ModelGenerator(model_path, device):
 def predict(model, image, device):
     # turn on eval mode
     model.eval()
-    
+
     # turn off autograd engine. Make it faster.
-    model.no_grad()
+    torch.no_grad()
 
 
     # make sure image is a np-array
