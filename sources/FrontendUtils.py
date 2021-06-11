@@ -105,16 +105,3 @@ def get_model_list (dir):
             models.append(model_name)
     return models
 
-
-def resize_image(image):
-    image = np.array(image)
-    height, width, _ = image.shape
-
-    max_height = 500
-    max_width = 500
-
-    scale_height = max_height / height
-    scale_width = max_width / width
-    scale = min(max(scale_height, scale_width), 1)
-    image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
-    return image

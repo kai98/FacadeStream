@@ -25,8 +25,6 @@ displaySideBarImage(image_list, name_list)
 
 model_path = './models'
 
-# Download model
-
 devices_map = get_devices()
 
 model_list = get_model_list(model_path)
