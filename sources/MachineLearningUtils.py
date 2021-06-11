@@ -21,27 +21,14 @@ def deeplabv3ModelGenerator(model_path, device):
     model.load_state_dict(state_dict)
     return model
 
-def resize_image_estrims(image):
-    image = np.array(image)
-    height, width, _ = image.shape
-
-    max_height = 600
-    max_width = 800
-
-    scale_height = max_height / height
-    scale_width = max_width / width
-    scale = min(max(scale_height, scale_width), 1)
-    image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
-    return image
 
 # One image at a time.
 # def predict(model, image, filename, prediction_path, device):
-def predict(model, image, device):
+def predict(model, image):
     # make sure image is a np-array
-
-    image = resize_image_estrims(image)
+    # image = resize_image(image)
     print('Start Prediction')
-    prediction_indexed = label_image(model, image, device)
+    prediction_indexed = label_image(model, image)
     print('Start decoding')
     prediction = decode_segmap(prediction_indexed)
     print('Decoded')
@@ -151,13 +138,11 @@ def decode_segmap(pred_indexed, nc=9):
     return rgb
 
 
-def label_image(model, image, device):
+def label_image(model, image):
     image = transforms_image(image)
     image = image.unsqueeze(0)
 
-    image = image.to(device)
     outputs = model(image)["out"]
-
     _, preds = torch.max(outputs, 1)
 
     preds = preds.to("cpu")
