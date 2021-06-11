@@ -154,7 +154,7 @@ def decode_segmap(pred_indexed, nc=9):
 def label_image(model, image):
     image = transforms_image(image)
     image = image.unsqueeze(0)
-
+    image = image.to(device)
     outputs = model(image)["out"]
     _, preds = torch.max(outputs, 1)
 
