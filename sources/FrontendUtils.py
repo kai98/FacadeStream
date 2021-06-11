@@ -52,7 +52,7 @@ def displayPrediction(filename, _img, _pred, _anno, _wwr):
     st.markdown("------")
     return
 
-def run_prediction(model, image_list, name_list, is_save_result=False):
+def run_prediction(model, device, image_list, name_list, is_save_result=False):
     input_size = len(image_list)
 
     for i in range(input_size):
@@ -60,7 +60,7 @@ def run_prediction(model, image_list, name_list, is_save_result=False):
         fn = name_without_extension(name_list[i])
 
         # predict prediction, annotated image, and estimated Window-to-Wall Ratio
-        pred_img, anno_image, estimated_wwr = predict(model, img)
+        pred_img, anno_image, estimated_wwr = predict(model, img, device)
         displayPrediction(fn, img, pred_img, anno_image, estimated_wwr)
 
         # save prediction if is_save_result is true

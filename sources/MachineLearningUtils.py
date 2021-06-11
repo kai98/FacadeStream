@@ -37,11 +37,11 @@ def deeplabv3ModelGenerator(model_path, device):
 
 # One image at a time.
 # def predict(model, image, filename, prediction_path, device):
-def predict(model, image):
+def predict(model, image, device):
     # make sure image is a np-array
     # image = resize_image(image)
     print('Start Prediction')
-    prediction_indexed = label_image(model, image)
+    prediction_indexed = label_image(model, image, device)
     print('Start decoding')
     prediction = decode_segmap(prediction_indexed)
     print('Decoded')
@@ -151,7 +151,7 @@ def decode_segmap(pred_indexed, nc=9):
     return rgb
 
 
-def label_image(model, image):
+def label_image(model, image, device):
     image = transforms_image(image)
     image = image.unsqueeze(0)
     image = image.to(device)
