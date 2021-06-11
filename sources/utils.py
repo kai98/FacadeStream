@@ -23,7 +23,6 @@ def deeplabv3ModelGenerator(model_path, device):
 
 def resize_image_estrims(image):
     image = np.array(image)
-
     height, width, _ = image.shape
 
     max_height = 600
@@ -39,11 +38,6 @@ def resize_image_estrims(image):
 # def predict(model, image, filename, prediction_path, device):
 def predict(model, image, device):
     # make sure image is a np-array
-
-    print(image.shape)
-    x = torch.randn(3)
-    print('grad')
-    print((x ** 2).requires_grad)
 
     image = resize_image_estrims(image)
     print('Start Prediction')
