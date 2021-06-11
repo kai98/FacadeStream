@@ -27,13 +27,12 @@ def name_without_extension(filename):
     return ".".join(str(filename).split('.')[:-1])
 
 # Show uploaded_images on the side bar
-for uploaded_file in uploaded_files:
+for u_file in uploaded_files:
     # png image might have the 4th channel - alpha channel.
-    img = Image.open(uploaded_file)
-    name = uploaded_file.name
+    img = Image.open(u_file)
+    name = u_file.name
     st.sidebar.image(img, caption=name)
     filename_list.append(name_without_extension(name))
-
 
 def save_uploaded_images(input_path):
     for ufile in uploaded_files:

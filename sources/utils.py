@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 import os
 
+
 transforms_image = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
@@ -28,11 +29,29 @@ def predict(model, image, device):
     # make sure image is a np-array
     image = np.array(image)
 
+
+    height, width, _ = image.shape
+    # Resize image, max_dimension should be 840
+    max_dim = 1000
+    scale_height = max_dim / height
+    scale_width = max_dim / width
+    scale = min(scale_height, scale_width, 1)
+    image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+
+    print(image.shape)
+    x = torch.randn(3)
+    print('grad')
+    print((x ** 2).requires_grad)
+
+
+    print('Start Prediction')
     prediction_indexed = label_image(model, image, device)
-
+    print('Start decoding')
     prediction = decode_segmap(prediction_indexed)
+    print('Decoded')
+    print('Start annotation')
     annotation = annotate_image(image, prediction_indexed)
-
+    print('End annotation')
     estimated_wwr = get_wwr_by_pixel(prediction_indexed)
 
     return prediction, annotation, estimated_wwr
