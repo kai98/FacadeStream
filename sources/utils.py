@@ -21,29 +21,31 @@ def deeplabv3ModelGenerator(model_path, device):
     model.load_state_dict(state_dict)
     return model
 
+def resize_image_estrims(image):
+    image = np.array(image)
+
+    height, width, _ = image.shape
+
+    max_height = 600
+    max_width = 800
+
+    scale_height = max_height / height
+    scale_width = max_width / width
+    scale = min(max(scale_height, scale_width), 1)
+    image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+    return image
 
 # One image at a time.
 # def predict(model, image, filename, prediction_path, device):
 def predict(model, image, device):
-
     # make sure image is a np-array
-    image = np.array(image)
-
-
-    height, width, _ = image.shape
-    # Resize image, max_dimension should be 840
-    max_dim = 1000
-    scale_height = max_dim / height
-    scale_width = max_dim / width
-    scale = min(scale_height, scale_width, 1)
-    image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
 
     print(image.shape)
     x = torch.randn(3)
     print('grad')
     print((x ** 2).requires_grad)
 
-
+    image = resize_image_estrims(image)
     print('Start Prediction')
     prediction_indexed = label_image(model, image, device)
     print('Start decoding')
