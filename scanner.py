@@ -161,10 +161,10 @@ if (model_list != []):
     device = torch.device(device_value)
     analysis_flag = st.button('Run it! ')
     model = deeplabv3ModelGenerator(model_path + "/" + selected_model, device)
-    # print('Model name: %s'% selected_model)
-    # print('Device: %s'%device_value)
-    if analysis_flag:
-        # turn off autograd engine. Make it faster.
-        torch.no_grad()
+    # Turn on model's evaluation mode
+    model.eval()
 
-        run_prediction()
+    # turn off autograd engine. Make it faster.
+    with torch.no_grad():
+        if analysis_flag:
+            run_prediction()

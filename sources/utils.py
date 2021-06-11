@@ -24,12 +24,6 @@ def deeplabv3ModelGenerator(model_path, device):
 # One image at a time.
 # def predict(model, image, filename, prediction_path, device):
 def predict(model, image, device):
-    # turn on eval mode
-    model.eval()
-
-    # turn off autograd engine. Make it faster.
-    torch.no_grad()
-
 
     # make sure image is a np-array
     image = np.array(image)
@@ -145,7 +139,6 @@ def decode_segmap(pred_indexed, nc=9):
 def label_image(model, image, device):
     image = transforms_image(image)
     image = image.unsqueeze(0)
-    image_np = np.asarray(image)
 
     image = image.to(device)
     outputs = model(image)["out"]
@@ -153,7 +146,6 @@ def label_image(model, image, device):
     _, preds = torch.max(outputs, 1)
 
     preds = preds.to("cpu")
-
     preds_np = preds.squeeze(0).cpu().numpy().astype(np.uint8)
 
     return preds_np
