@@ -6,7 +6,7 @@ import gdown
 def name_without_extension(filename):
     return ".".join(str(filename).split('.')[:-1])
 
-def process_upload_files(uploaded_files):
+def process_upload_files(uploaded_files, max_height=500, max_width=500):
     image_list = []
     name_list = []
 
@@ -16,7 +16,7 @@ def process_upload_files(uploaded_files):
         name_list.append(filename)
 
         img = np.array(Image.open(up_file).convert('RGB'))
-        img = resize_image(img)
+        img = resize_image(img, max_height, max_width)
         image_list.append(img)
     return image_list, name_list
 

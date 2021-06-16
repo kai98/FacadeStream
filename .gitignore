@@ -2,10 +2,10 @@
 sources/.ipynb_checkpoints/*
 sources/__pycache__/*
 .DS_Store
-
+venv/*
+.idea/*
 *.pth
 *.ph
-
 *.jpg
 *.jpeg
 *.png

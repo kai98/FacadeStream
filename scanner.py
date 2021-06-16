@@ -2,6 +2,14 @@ import streamlit as st
 from sources.MachineLearningUtils import *
 from sources.FrontendUtils import *
 
+# Parameters:
+# Saving prediction locally?
+is_save_result = False
+
+# Max height and max width: inputs greater than this shape will be resized.
+max_height = 1000
+max_width = 1000
+
 st.set_page_config(page_title='Facade Segmentation', page_icon='🏠', initial_sidebar_state='expanded')
 st.title('DeepLab Facade')
 
@@ -17,10 +25,7 @@ hide_streamlit_style = """
 
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-# Saving prediction locally?
-is_save_result = False
-
-image_list, name_list = process_upload_files(uploaded_files)
+image_list, name_list = process_upload_files(uploaded_files, max_height, max_width)
 displaySideBarImage(image_list, name_list)
 
 model_path = './models'
@@ -32,7 +37,7 @@ model_list = get_model_list(model_path)
 if (model_list == []):
     # download_flag = st.button('Download the model')
     cols = st.beta_columns(2)
-    download_stage = cols[1].markdown('Model not found 😧')
+    download_stage = cols[1].markdown('Model not found 😧 Please download the model. 📦')
     if (cols[0].button('Download Model')):
         download_stage.markdown('Downloading... ⏳')
         download_default_model(model_path)

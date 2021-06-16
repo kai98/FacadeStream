@@ -12,12 +12,9 @@ transforms_image = transforms.Compose([
 ])
 
 
-def resize_image(image):
+def resize_image(image, max_height, max_width):
     image = np.array(image)
     height, width, _ = image.shape
-
-    max_height = 500
-    max_width = 500
 
     scale_height = max_height / height
     scale_width = max_width / width
