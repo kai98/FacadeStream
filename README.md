@@ -7,6 +7,8 @@ Visualization tool for Facade Segmentation
 
 **Installing Dependencies**
 
+In your virtual environment (for example, anaconda), install all dependencies by running: 
+
 ```
 pip3 install -r requirements.txt
 ```
