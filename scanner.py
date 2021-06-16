@@ -7,8 +7,8 @@ from sources.FrontendUtils import *
 is_save_result = False
 
 # Max height and max width: inputs greater than this shape will be resized.
-max_height = 1000
-max_width = 1000
+max_height = 750
+max_width = 750
 
 st.set_page_config(page_title='Facade Segmentation', page_icon='🏠', initial_sidebar_state='expanded')
 st.title('DeepLab Facade')
