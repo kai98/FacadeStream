@@ -11,7 +11,7 @@ max_height = 750
 max_width = 750
 
 st.set_page_config(page_title='Facade Segmentation', page_icon='🏠', initial_sidebar_state='expanded')
-st.title('DeepLab Facade')
+st.title('Facade Segmentation')
 
 uploaded_files = st.sidebar.file_uploader('Upload Facade Images', ['png', 'jpg', 'jpeg'], accept_multiple_files=True)
 
