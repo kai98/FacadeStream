@@ -41,38 +41,36 @@ def displayPrediction(filename, _img, _pred, _anno, _wwr):
     # col0: prediction (annotation),
 
     cols = st.beta_columns(3)
-    cols[0].image(_img, use_column_width=True, caption='Image: ' + filename)
+    cols[0].image(_img, use_column_width=True, caption='Image: {}'.format(filename))
     cols[1].image(_pred, use_column_width=True, caption='Prediction')
     cols[2].image(_anno, use_column_width=True, caption='Annotation')
 
-    wwr_percentage = str(round(_wwr * 100, 2)) + "%"
-
     # Markdown
-    st.markdown("> Estimated Window-to-Wall Ratio:  " + "**" + wwr_percentage + "**")
+    st.markdown("> Estimated Window-to-Wall Ratio:  **{}**".format(_wwr))
+    # st.markdown("> Estimated Window-to-Wall Ratio:  " + "**" + wwr_percentage + "**")
     st.markdown("------")
     return
 
-def run_prediction(model, device, image_list, name_list, is_save_result=False):
+def run_prediction(model, device, image_list, name_list, result_path, is_save_result=False):
     input_size = len(image_list)
 
     for i in range(input_size):
         img = image_list[i]
-        fn = name_without_extension(name_list[i])
+        filename = name_without_extension(name_list[i])
 
         # predict prediction, annotated image, and estimated Window-to-Wall Ratio
-        pred_img, anno_image, estimated_wwr = predict(model, img, device)
-        displayPrediction(fn, img, pred_img, anno_image, estimated_wwr)
+        pred_img, anno_image, wwr = predict(model, img, device)
+        displayPrediction(filename, img, pred_img, anno_image, wwr)
 
         # save prediction if is_save_result is true
         if (is_save_result):
-            save_result(pred_img, anno_image, estimated_wwr, prediction_path, filename)
+            save_result(pred_img, anno_image, wwr, result_path, filename)
 
     return
 
 def download_default_model(dir):
     google_drive_url = 'https://drive.google.com/uc?export=download&id=1rJ3edeARtcprrgs14lj5iZLTLkn9kufw'
     output = dir + '/deeplabv3_resnet101.pth'
-    # md5 = '31aa0b0a3607b091975b5e05df590280'
     gdown.download(google_drive_url, output,  quiet=False)
     # gdown.cached_download(google_drive_url, output, md5=md5)
 

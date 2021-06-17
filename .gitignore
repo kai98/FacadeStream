@@ -10,3 +10,4 @@ venv/*
 *.jpeg
 *.png
 .env
+*.csv

@@ -4,11 +4,16 @@ from sources.FrontendUtils import *
 
 # Parameters:
 # Saving prediction locally?
-is_save_result = False
+is_save_result = True
 
 # Max height and max width: inputs greater than this shape will be resized.
 max_height = 750
 max_width = 750
+
+# File Path
+model_path = './models'
+# prediction_path = './prediction'
+result_path = './results'
 
 st.set_page_config(page_title='Facade Segmentation', page_icon='🏠', initial_sidebar_state='expanded')
 st.title('Facade Segmentation')
@@ -28,10 +33,7 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 image_list, name_list = process_upload_files(uploaded_files, max_height, max_width)
 displaySideBarImage(image_list, name_list)
 
-model_path = './models'
-
 devices_map = get_devices()
-
 model_list = get_model_list(model_path)
 
 if (model_list == []):
@@ -69,4 +71,4 @@ if (model_list != []):
         model.eval()
         # turn off auto grad machine
         with torch.no_grad():
-            run_prediction(model, device, img_device_list, name_list, is_save_result)
+            run_prediction(model, device, img_device_list, name_list, result_path, is_save_result)
