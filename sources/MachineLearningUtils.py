@@ -46,6 +46,7 @@ def predict(model, image, device):
     return prediction, annotation, wwr_percentage
 
 def save_result(pred, anno, wwr, path, filename):
+    create_folder(path)
     save_image(pred, path, 'prediction', filename)
     save_image(anno, path, 'annotation', filename)
     save_wwr(wwr, path, filename)
