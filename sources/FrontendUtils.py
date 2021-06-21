@@ -42,7 +42,7 @@ def displayPrediction(filename, _img, _pred, _anno, _wwr):
 
     cols = st.beta_columns(3)
     cols[0].image(_img, use_column_width=True, caption='Image: {}'.format(filename))
-    cols[1].image(_pred, use_column_width=True, caption='Prediction')
+    cols[1].image(_pred, use_column_width=True, caption='Segmentation')
     cols[2].image(_anno, use_column_width=True, caption='Annotation')
 
     # Markdown
