@@ -38,7 +38,7 @@ model_list = get_model_list(model_path)
 
 if (model_list == []):
     # download_flag = st.button('Download the model')
-    cols = st.beta_columns(2)
+    cols = st.columns(2)
     download_stage = cols[1].markdown('Model not found 😧 Please download the model. 📦')
     if (cols[0].button('Download Model')):
         download_stage.markdown('Downloading... ⏳')
@@ -46,7 +46,7 @@ if (model_list == []):
         download_stage.markdown('Downloaded 🎉')
         model_list = get_model_list(model_path)
 
-cols = st.beta_columns(2)
+cols = st.columns(2)
 selected_model = cols[0].selectbox('Model', model_list)
 
 cuda_message = ' - CUDA is available' if torch.cuda.is_available() else ''
