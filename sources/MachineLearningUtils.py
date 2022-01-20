@@ -30,7 +30,6 @@ def deeplabv3ModelGenerator(model_path, device):
     return model
 
 # One image at a time.
-@st.cache(ttl=24*6)
 def predict(model, image, device):
     # make sure image is a np-array
     # image = resize_image(image)
@@ -164,7 +163,6 @@ def label_image(model, image, device):
     preds_np = preds.squeeze(0).cpu().numpy().astype(np.uint8)
 
     return preds_np
-
 
 def init_deeplab(num_classes):
     model_deeplabv3 = torchvision.models.segmentation.deeplabv3_resnet101()
