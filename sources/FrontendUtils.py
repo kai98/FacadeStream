@@ -65,7 +65,6 @@ def run_prediction(model, device, image_list, name_list, result_path, is_save_re
         # save prediction if is_save_result is true
         if (is_save_result):
             save_result(pred_img, anno_image, wwr, result_path, filename)
-
     return
 
 def download_default_model(dir):

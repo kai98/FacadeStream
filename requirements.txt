@@ -1,4 +1,4 @@
-streamlit~=0.79.0
+streamlit~=1.4
 pillow~=8.2.0
 torchvision~=0.9.1
 torch~=1.8.1
