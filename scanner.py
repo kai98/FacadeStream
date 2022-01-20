@@ -4,7 +4,7 @@ from sources.FrontendUtils import *
 
 # Parameters:
 # Saving prediction locally?
-is_save_result = True
+is_save_result = False
 
 # Max height and max width: inputs greater than this shape will be resized.
 max_height = 750
