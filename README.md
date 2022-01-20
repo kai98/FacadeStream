@@ -1,5 +1,5 @@
 # FacadeStream
-Visualization tool for Facade Segmentation
+Visualization tool for Facade Scanner Project
 
 
 
