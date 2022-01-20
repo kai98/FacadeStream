@@ -2,6 +2,8 @@ import streamlit as st
 from sources.MachineLearningUtils import *
 from sources.FrontendUtils import *
 
+@st.cache
+
 # Parameters:
 # Saving prediction locally?
 is_save_result = False
