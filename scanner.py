@@ -72,3 +72,4 @@ if (model_list != []):
         # turn off auto grad machine
         with torch.no_grad():
             run_prediction(model, device, img_device_list, name_list, result_path, is_save_result)
+

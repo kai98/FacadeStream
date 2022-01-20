@@ -20,6 +20,7 @@ def resize_image(image, max_height, max_width):
     image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
     return image
 
+@st.cache
 def deeplabv3ModelGenerator(model_path, device):
     num_classes = 9
     model = init_deeplab(num_classes)
@@ -29,6 +30,7 @@ def deeplabv3ModelGenerator(model_path, device):
     return model
 
 # One image at a time.
+@st.cache(ttl=24*6)
 def predict(model, image, device):
     # make sure image is a np-array
     # image = resize_image(image)
