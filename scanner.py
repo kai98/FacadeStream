@@ -2,7 +2,15 @@ import streamlit as st
 from sources.MachineLearningUtils import *
 from sources.FrontendUtils import *
 
+# load model
 @st.cache
+def deeplabv3ModelGenerator(model_path, device):
+    num_classes = 9
+    model = init_deeplab(num_classes)
+    state_dict = torch.load(model_path, map_location=device)
+    model = model.to(device)
+    model.load_state_dict(state_dict)
+    return model
 
 # Parameters:
 # Saving prediction locally?

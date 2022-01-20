@@ -20,13 +20,13 @@ def resize_image(image, max_height, max_width):
     image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
     return image
 
-def deeplabv3ModelGenerator(model_path, device):
-    num_classes = 9
-    model = init_deeplab(num_classes)
-    state_dict = torch.load(model_path, map_location=device)
-    model = model.to(device)
-    model.load_state_dict(state_dict)
-    return model
+# def deeplabv3ModelGenerator(model_path, device):
+#     num_classes = 9
+#     model = init_deeplab(num_classes)
+#     state_dict = torch.load(model_path, map_location=device)
+#     model = model.to(device)
+#     model.load_state_dict(state_dict)
+#     return model
 
 # One image at a time.
 def predict(model, image, device):
