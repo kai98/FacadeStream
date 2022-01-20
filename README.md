@@ -1,7 +1,7 @@
 # FacadeStream
 Visualization tool for Facade Scanner Project
 
-Hosted with Streamlit.io!
+Hosted with Streamlit!
 
 https://share.streamlit.io/kai98/facadestream/main/scanner.py
 
