@@ -1,6 +1,7 @@
 import streamlit as st
 from sources.MachineLearningUtils import *
 from sources.FrontendUtils import *
+import torch
 
 # load model
 @st.cache
