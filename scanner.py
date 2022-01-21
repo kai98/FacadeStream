@@ -4,7 +4,7 @@ from sources.FrontendUtils import *
 import torch
 
 # load model
-@st.cache
+@st.cache(allow_output_mutation=True)
 def deeplabv3ModelGenerator(model_path, device):
     num_classes = 9
     model = init_deeplab(num_classes)
